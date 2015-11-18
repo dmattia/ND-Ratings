@@ -5,20 +5,147 @@
 	ND Ratings
 {% endblock %}
 
+{% block style %}
+.right {
+	float: right;
+}
+{% endblock %}
+
 {% block content %}
 
-<div class="card z-depth-4" id="name">
-	<h4>{{ professor.firstName }} {{ professor.lastName }}</h4>
+<div class="" id="name">
+	<div class="row inner">
+		<div class="col s6">
+			<h4>{{ professor.firstName }} {{ professor.lastName }}</h4>
+		</div>
+		<div class="col s6">
+			<a class="right btn-large waves-effect light-blue darken-4" href="{% url 'addRating' professor.id %}"><i class="material-icons right">add</i>Rating</a>
+		</div>
+	</div>
+	<table class="centered striped">
+		<thead>
+			<th data-field="id">Category</th>
+			<th data-field="desc">Description</th>
+			<th data-field="value">Rating</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Overall</td>
+				<td>1 is terrible, 10 is incredible</td>
+				<td class="
+				{% if professor.overall %}
+				{% if professor.overall < 2 %}
+					red
+				{% elif professor.overall < 3 %}
+					red lighten-3
+				{% elif professor.overall < 4 %}
+					orange lighten-2
+				{% elif professor.overall < 5 %}
+					yellow
+				{% elif professor.overall < 6 %}
+					yellow darken-4
+				{% elif professor.overall < 7 %}
+					lime
+				{% elif professor.overall < 8 %}
+					green lighten-1
+				{% else %}
+					green
+				{% endif %}
+				{% endif %}
+				">{{ professor.overall|floatformat }}</td>
+			</tr>	
+			<tr>
+				<td>Humor</td>
+				<td>1 is no humor, 10 is hilarious</td>
+				<td class = "
+				{% if professor.humor %}
+				{% if professor.humor < 2 %}
+					red
+				{% elif professor.humor < 3 %}
+					red lighten-3
+				{% elif professor.humor < 4 %}
+					orange lighten-2
+				{% elif professor.humor < 5 %}
+					yellow
+				{% elif professor.humor < 6 %}
+					yellow darken-4
+				{% elif professor.humor < 7 %}
+					lime
+				{% elif professor.humor < 8 %}
+					green lighten-1
+				{% else %}
+					green
+				{% endif %}
+				{% endif %}
+				">{{ professor.humor|floatformat }}</td>
+			</tr>	
+			<tr>
+				<td>Difficulty</td>
+				<td>1 is impossible, 10 is an easy A</td>
+				<td class = "
+				{% if professor.difficulty %}
+				{% if professor.difficulty < 2 %}
+					red
+				{% elif professor.difficulty < 3 %}
+					red lighten-3
+				{% elif professor.difficulty < 4 %}
+					orange lighten-2
+				{% elif professor.difficulty < 5 %}
+					yellow
+				{% elif professor.difficulty < 6 %}
+					yellow darken-4
+				{% elif professor.difficulty < 7 %}
+					lime
+				{% elif professor.difficulty < 8 %}
+					green lighten-1
+				{% else %}
+					green
+				{% endif %}
+				{% endif %}
+				">{{ professor.difficulty|floatformat }}</td>
+			</tr>	
+			<tr>
+				<td>Availability</td>
+				<td>1 is never around, 10 is always open</td>
+				<td class = "
+				{% if professor.availability %}
+				{% if professor.availability < 2 %}
+					red
+				{% elif professor.availability < 3 %}
+					red lighten-3
+				{% elif professor.availability < 4 %}
+					orange lighten-2
+				{% elif professor.availability < 5 %}
+					yellow
+				{% elif professor.availability < 6 %}
+					yellow darken-4
+				{% elif professor.availability < 7 %}
+					lime
+				{% elif professor.availability < 8 %}
+					green lighten-1
+				{% else %}
+					green
+				{% endif %}
+				{% endif %}
+				">{{ professor.availability|floatformat }}</td>
+			</tr>	
+		</tbody>
+	</table>
+
 </div>	
 
 <div class="reviews">
+	<h2>Reviews</h2>
 	{% for review in reviews %}
 		<div class="card z-depth-1">
+			<div class="inner">
 			<h5>Course: {{ review.course }}</h5>
 			<h5>Year: {{ review.year_taken }}</h5>
 			<p>{{ review.review }}</p>
+			</div>
 		</div>
 	{% endfor %}
+	<a class="btn-large waves-effect light-blue darken-4" href="{% url 'add_review' professor.id %}"><i class="material-icons right">add</i>Review</a>
 </div>
 
 {% endblock %}

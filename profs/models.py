@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.contrib import admin
 from django.db import models
 
@@ -142,16 +143,45 @@ class Professor(models.Model):
 		return self.COLLEGES
 	def getDepartments(self):
 		return self.DEPARTMENTS
+	def overall(self):
+		return Rating.objects.filter(professor=self).aggregate(average_overall=Avg('overall'))['average_overall']
+	def availability(self):
+		return Rating.objects.filter(professor=self).aggregate(average_availability=Avg('availability'))['average_availability']
+	def difficulty(self):
+		return Rating.objects.filter(professor=self).aggregate(average_difficulty=Avg('difficulty'))['average_difficulty']
+	def humor(self):
+		return Rating.objects.filter(professor=self).aggregate(average_humor=Avg('humor'))['average_humor']
 
 class Review(models.Model):
 	professor = models.ForeignKey(Professor)
 	poster = models.ForeignKey(User)
 	course = models.CharField(max_length=64)
 	year_taken = models.IntegerField()
-	review = models.CharField(max_length=2048)
+	review = models.TextField(max_length=2048)
 	
 	def __unicode__(self):
 		return unicode('%s review of %s %s' % (self.poster.username, self.professor.firstName, self.professor.lastName))
 
+class Rating(models.Model):
+	RATINGS = (
+		('1', '1'),
+		('2', '2'),
+		('3', '3'),
+		('4', '4'),
+		('5', '5'),
+		('6', '6'),
+		('7', '7'),
+		('8', '8'),
+		('9', '9'),
+		('10', '10'),
+	)
+	#id = models.IntegerField(primary_key=True)
+	professor = models.ForeignKey(Professor, null=True)
+	humor = models.CharField(max_length=2, choices=RATINGS, null=True)
+	difficulty = models.CharField(max_length=2, choices=RATINGS, null=True)
+	availability = models.CharField(max_length=2, choices=RATINGS, null=True)
+	overall = models.CharField(max_length=2, choices=RATINGS, null=True)
+
 admin.site.register(Professor)
 admin.site.register(Review)
+admin.site.register(Rating)

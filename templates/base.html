@@ -12,6 +12,15 @@
     <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>{% block title %}ND Ratings{% endblock %}</title>
+    <style>
+	nav {
+		background-color: #01579b;
+	}
+	.inner {
+		padding: 10px;
+	}
+	{% block style %}{% endblock %}
+    </style>
 </head>
 
 <body class="{% if user.is_authenticated %}grey lighten-5{% endif %}">
@@ -26,8 +35,7 @@
 		    {% if user.is_authenticated %}
 			<li><a class="waves-effect" href="/accounts/profs/profList">All Professors</a></li>
 			<li><a class="waves-effect" href="/accounts/profs/profSearch">Search</a></li>
-			<li><a class="waves-effect" href="/accounts/profs/add_review">Add Review</a></li>
-			<li><a class="waves-effect" href="/accounts/profs/add_prof">Add Professor</a></li>
+			<li><a class="waves-effect" href="/accounts/profs/add_professor/">Add Professor</a></li>
 			<li><a class="waves-effect" href="/accounts/logout/">Logout</a></li>
 		    {% else %}
 			<li><a class="waves-effect" href="/accounts/login/">Log in</a></li>

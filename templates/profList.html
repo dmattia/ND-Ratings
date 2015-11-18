@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block style %}
+{% endblock %}
+
 {% block header %}
 	ND Ratings
 {% endblock %}
@@ -8,12 +11,17 @@
 {% block content %}
 
 	<h2>Prof List</h2>
-	<ul>
 	{% for professor in professors %}
-		<a href="{% url 'profView' professor.id %}">
-		<li>{{ professor.firstName }} {{ professor.lastName }}</li>
-		</a>
+		<div class="card z-depth-1 row">
+			<div class="inner">
+			<div class="col s6">
+				<h4>{{ professor.firstName }} {{ professor.lastName }}</h4>
+			</div>
+			<div class="col s6">
+				<a class="right btn-floating btn-large waves-effect waves-light light-blue darken-4" href="{% url 'profView' professor.id %}"><i class="material-icons">visibility</i></a>
+			</div>
+			</div>
+		</div>
 	{% endfor %}
-	</ul>
 
 {% endblock %}
