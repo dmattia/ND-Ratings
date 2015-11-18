@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.contrib import admin
 from django.db import models
 
 # Create your models here.
@@ -130,4 +132,26 @@ class Professor(models.Model):
 		('Visual Arts', 'Visual Arts'),
 	)
 	department = models.CharField(max_length=255, choices=DEPARTMENTS)
-	college = models.CharField(max_length=64, choices = COLLEGES)
+	college = models.CharField(max_length=64, choices=COLLEGES)
+	firstName = models.CharField(max_length=25)
+	lastName = models.CharField(max_length=25)
+
+	def __unicode__(self):
+		return unicode('%s %s' % (self.firstName, self.lastName))
+	def getColleges(self):
+		return self.COLLEGES
+	def getDepartments(self):
+		return self.DEPARTMENTS
+
+class Review(models.Model):
+	professor = models.ForeignKey(Professor)
+	poster = models.ForeignKey(User)
+	course = models.CharField(max_length=64)
+	year_taken = models.IntegerField()
+	review = models.CharField(max_length=2048)
+	
+	def __unicode__(self):
+		return unicode('%s review of %s %s' % (self.poster.username, self.professor.firstName, self.professor.lastName))
+
+admin.site.register(Professor)
+admin.site.register(Review)

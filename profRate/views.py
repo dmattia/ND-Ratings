@@ -20,7 +20,7 @@ def auth_view(request):
 		return HttpResponseRedirect('/accounts/invalid/')
 
 def loggedin(request):
-	return HttpResponseRedirect('/acounts/yay/')
+	return HttpResponseRedirect('/accounts/profs/profList')
 
 def invalid_login(request):
 	return render_to_response('invalid_login.html')

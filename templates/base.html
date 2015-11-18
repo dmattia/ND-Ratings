@@ -19,18 +19,22 @@
 	<paper-toolbar>
 	    <nav style="margin-bottom:20px;" class="row">
   	    <div class="nav-wrapper col s10 offset-s1">
-  	      <a href="" class="brand-logo">
+  	      <a href="/accounts/profs/profList" class="brand-logo">
 			ND Ratings
 	      </a>
   	      <ul id="nav-mobile" class="right hide-on-med-and-down">
 		    {% if user.is_authenticated %}
+			<li><a class="waves-effect" href="/accounts/profs/profList">All Professors</a></li>
+			<li><a class="waves-effect" href="/accounts/profs/profSearch">Search</a></li>
+			<li><a class="waves-effect" href="/accounts/profs/add_review">Add Review</a></li>
+			<li><a class="waves-effect" href="/accounts/profs/add_prof">Add Professor</a></li>
 			<li><a class="waves-effect" href="/accounts/logout/">Logout</a></li>
 		    {% else %}
 			<li><a class="waves-effect" href="/accounts/login/">Log in</a></li>
 			<li><a class="waves-effect" href="/accounts/register/">Register</a></li>
 		    {% endif %}
 		    <li>
-			<a class="waves-effect" href="https://github.com/dmattia/Yik-Yak-Desktop"><i class="fa fa-github"></i></a>
+			<a class="waves-effect" href="https://github.com/dmattia/ND-Ratings"><i class="fa fa-github"></i></a>
 		    </li>
   	      </ul>
   	    </div>

@@ -4,8 +4,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/profs/', include('profs.urls')),
     # user auth views
-    #url(r'^accounts/', include('userprofile.urls')),
+    url(r'^$', 'profRate.views.login'),
     url(r'^accounts/login/$', 'profRate.views.login'),
     url(r'^accounts/auth/$', 'profRate.views.auth_view'),
     url(r'^accounts/logout/$', 'profRate.views.logout'),

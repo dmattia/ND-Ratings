@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block header %}
+	ND Ratings
+{% endblock %}
+
+{% block content %}
+
+<div class="card z-depth-4" id="name">
+	<h4>{{ professor.firstName }} {{ professor.lastName }}</h4>
+</div>	
+
+<div class="reviews">
+	{% for review in reviews %}
+		<div class="card z-depth-1">
+			<h5>Course: {{ review.course }}</h5>
+			<h5>Year: {{ review.year_taken }}</h5>
+			<p>{{ review.review }}</p>
+		</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
