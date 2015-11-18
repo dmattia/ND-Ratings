@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load polymerdep %}
+{% load tz %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script src="{% static 'materialdjango/components/bower_components/webcomponentsjs/webcomponents-lite.js' %}"></script>
+    {% include 'material/includes/material_css.html' %}
+    {{ "polymer/polymer.html"|dep }}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>{% block title %}ND Ratings{% endblock %}</title>
+</head>
+
+<body class="{% if user.is_authenticated %}grey lighten-5{% endif %}">
+	<paper-header-panel class="flex">
+	<paper-toolbar>
+	    <nav style="margin-bottom:20px;" class="row">
+  	    <div class="nav-wrapper col s10 offset-s1">
+  	      <a href="" class="brand-logo">
+			ND Ratings
+	      </a>
+  	      <ul id="nav-mobile" class="right hide-on-med-and-down">
+		    {% if user.is_authenticated %}
+			<li><a class="waves-effect" href="/accounts/logout/">Logout</a></li>
+		    {% else %}
+			<li><a class="waves-effect" href="/accounts/login/">Log in</a></li>
+			<li><a class="waves-effect" href="/accounts/register/">Register</a></li>
+		    {% endif %}
+		    <li>
+			<a class="waves-effect" href="https://github.com/dmattia/Yik-Yak-Desktop"><i class="fa fa-github"></i></a>
+		    </li>
+  	      </ul>
+  	    </div>
+  	  </nav>
+	    </div>
+	<paper-toolbar>
+
+	    <div id="content" style="width:90%; -webkit-transform: translateX(5%);">
+	    {% block content %}{% endblock %}
+	    </div>
+
+	    <div id="footer">
+	    {% block footer %}{% endblock %}
+	    </div>
+	</paper-header-panel>
+    	{% include 'material/includes/material_js.html' %}
+	{% block scripts %}{% endblock %}
+</body>
+
+</html>
