@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from forms import UserCreateForm
 from django.contrib import auth
 
@@ -20,7 +21,7 @@ def auth_view(request):
 		return HttpResponseRedirect('/accounts/invalid/')
 
 def loggedin(request):
-	return HttpResponseRedirect('/accounts/profs/profList')
+	return HttpResponseRedirect('/accounts/profs/profSearch')
 
 def invalid_login(request):
 	return render_to_response('invalid_login.html')
@@ -33,6 +34,12 @@ def register_user(request):
 	if request.method == 'POST':
 		form = UserCreateForm(request.POST)
 		if form.is_valid():
+			# check if email is already being used
+			if User.objects.filter(email__iexact=form.cleaned_data['email']).count > 0:
+				args = {
+					'message': 'This email is already in use',
+				}
+				return render_to_response('message.html', args)
 			form.save()
 			return HttpResponseRedirect('/accounts/register_success/')
 		else:

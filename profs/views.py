@@ -44,6 +44,7 @@ def profSearch(request):
 	else:
 		form = ProfSearchForm()	
 		params = {
+			'formTitle': 'Search for a Professor',
 			'form': form,
 		}
 		return render(request, 'profSearch.html', params)
@@ -65,11 +66,13 @@ def add_review(request, profID):
 				}
 				return render(request, 'message.html', params)
 			review.save()
-		return HttpResponseRedirect('/accounts/profs/profID/' + str(review.professor.id) + '/')
+		return HttpResponseRedirect('/accounts/profs/profID/' + profID + '/')
 	else:
 		form = ReviewForm()
+		prof = Professor.objects.get(id=profID)
 		params = {
 			'form': form,
+			'formTitle': 'Add a review for ' + str(prof.firstName) + ' ' + str(prof.lastName),
 		}
 		return render(request, 'profSearch.html', params)
 
@@ -94,8 +97,10 @@ def add_rating(request, profID):
 		return HttpResponseRedirect('/accounts/profs/profID/' + profID + '/')
 	else:
 		form = RatingForm()
+		prof = Professor.objects.get(id=profID)
 		params = {
 			'form': form,
+			'formTitle': 'Add a rating for ' + str(prof.firstName) + ' ' + str(prof.lastName),
 		}
 		return render(request, 'profSearch.html', params)
 
@@ -116,5 +121,6 @@ def add_prof(request):
 		form = ProfessorForm()
 		params = {
 			'form': form,
+			'formTitle': 'Add a professor',
 		}
 		return render(request, 'profSearch.html', params)
