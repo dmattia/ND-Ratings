@@ -175,12 +175,15 @@ class Rating(models.Model):
 		('9', '9'),
 		('10', '10'),
 	)
-	#id = models.IntegerField(primary_key=True)
 	professor = models.ForeignKey(Professor, null=True)
+	poster = models.ForeignKey(User, null=True)
 	humor = models.CharField(max_length=2, choices=RATINGS, null=True)
 	difficulty = models.CharField(max_length=2, choices=RATINGS, null=True)
 	availability = models.CharField(max_length=2, choices=RATINGS, null=True)
 	overall = models.CharField(max_length=2, choices=RATINGS, null=True)
+	
+	def __unicode__(self):
+		return unicode('%s rate of %s %s' % (self.poster.username, self.professor.firstName, self.professor.lastName))
 
 admin.site.register(Professor)
 admin.site.register(Review)

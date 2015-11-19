@@ -59,6 +59,11 @@ def add_review(request, profID):
 			review.course = form.cleaned_data['course']	
 			review.year_taken = form.cleaned_data['year_taken']	
 			review.review = form.cleaned_data['review']	
+			if Review.objects.filter(poster=request.user).filter(professor=review.professor).count > 0:
+				params = {
+					'message': 'You cannot review the same professor multiple times',
+				}
+				return render(request, 'message.html', params)
 			review.save()
 		return HttpResponseRedirect('/accounts/profs/profID/' + str(review.professor.id) + '/')
 	else:
@@ -75,10 +80,16 @@ def add_rating(request, profID):
 		if form.is_valid():
 			rating = Rating()
 			rating.professor = Professor.objects.get(id=profID)
+			rating.poster = request.user
 			rating.overall = form.cleaned_data['overall']
 			rating.humor = form.cleaned_data['humor']
 			rating.difficulty = form.cleaned_data['difficulty']
 			rating.availability = form.cleaned_data['availability']
+			if Rating.objects.filter(poster=request.user).filter(professor=rating.professor).count > 0:
+				params = {
+					'message': 'You cannot rate a professor multiple times',
+				}
+				return render(request, 'message.html', params)
 			rating.save()
 		return HttpResponseRedirect('/accounts/profs/profID/' + profID + '/')
 	else:
@@ -93,6 +104,12 @@ def add_prof(request):
 	if request.method == 'POST':
 		form = ProfessorForm(request.POST)
 		if form.is_valid():
+			if Professor.objects.filter(firstName=form.cleaned_data['firstName'],
+						    lastName=form.cleaned_data['lastName']).count > 0:
+				params = {
+					'message': 'There is already a professor with this full name',
+				}
+				return render(request, 'message.html', params)
 			form.save()
 		return HttpResponseRedirect('accounts/profs/profSearch/')
 	else:
