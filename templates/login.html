@@ -8,6 +8,7 @@
 
 <form method="post" onsubmit="disableForm();" id="login_form" action="/accounts/auth/">
 	{% csrf_token %}
+	<input type="hidden" name="next" id="next" value="{{ next }}" />
 	<label for="username">User Name:</label>
 	<input type="text" name="username" value="" id="username">
 	<label for="password">Password:</label>

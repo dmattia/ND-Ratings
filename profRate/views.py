@@ -6,7 +6,9 @@ from forms import UserCreateForm
 from django.contrib import auth
 
 def login(request):
-	c = {}
+	c = {
+		'next': request.GET['next'],
+	}
 	c.update(csrf(request))
 	return render_to_response('login.html', c)
 
@@ -16,12 +18,14 @@ def auth_view(request):
 	user = auth.authenticate(username=username, password=password)
 	if user is not None:
 		auth.login(request, user)
-		return HttpResponseRedirect('/accounts/loggedin/')
+		return HttpResponseRedirect(request.POST['next'])
+		#return HttpResponseRedirect('/accounts/loggedin/')
 	else:
 		return HttpResponseRedirect('/accounts/invalid/')
 
 def loggedin(request):
-	return HttpResponseRedirect('/accounts/profs/profSearch')
+	return HttpResponseRedirect(request.POST['next'])
+	#return HttpResponseRedirect('/accounts/profs/profSearch')
 
 def invalid_login(request):
 	return render_to_response('invalid_login.html')

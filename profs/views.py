@@ -4,14 +4,12 @@ from forms import ProfSearchForm, ReviewForm, RatingForm, ProfessorForm
 from models import Professor, Review, Rating
 from django.shortcuts import render
 
-@login_required
 def profList(request):
 	params = {
 		'professors': Professor.objects.all()
 	}
 	return render(request, 'profList.html', params)
 
-@login_required
 def profView(request, profID):
 	prof = Professor.objects.get(id=profID)
 	params = {
@@ -20,7 +18,6 @@ def profView(request, profID):
 	}
 	return render(request, 'profView.html', params)
 
-@login_required
 def profSearch(request):
 	if request.method == 'POST':
 		form = ProfSearchForm(request.POST)

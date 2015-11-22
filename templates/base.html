@@ -33,10 +33,10 @@
 	      </a>
               <a href="#" data-activates="sidebar" class="button-collapse"><i class="material-icons">menu</i></a>
   	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-		    {% if user.is_authenticated %}
 			<li><a class="waves-effect" href="/accounts/profs/profList">All Professors</a></li>
 			<li><a class="waves-effect" href="/accounts/profs/profSearch">Search</a></li>
 			<li><a class="waves-effect" href="/accounts/profs/add_professor/">Add Professor</a></li>
+		    {% if user.is_authenticated %}
 			<li><a class="waves-effect" href="/accounts/logout/">Logout</a></li>
 		    {% else %}
 			<li><a class="waves-effect" href="/accounts/login/">Log in</a></li>
